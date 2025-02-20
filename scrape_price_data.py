@@ -76,6 +76,6 @@ if __name__ == "__main__":
         prices[hotel] = price
 
     # Save the results as a JSON file
-    path = "/media/data/pricedata_cesare/"
+    path = "/media/data/pricedata_cesare/data/"
     # path = ""
     save_results(prices, path)

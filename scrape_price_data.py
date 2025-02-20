@@ -2,7 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 import json
-import datetime
 
 
 def get_hotel_nextday_price_booking(hotel_url):
@@ -38,7 +37,7 @@ def get_hotel_nextday_price_booking(hotel_url):
 
         if price_element:
             price = price_element.text.strip()
-            print(f"The price for tomorrow night is: {price}")
+            print(f"At this {hotel_url}, \n The price for tomorrow night is: {price}")
         else:
             print("Price element not found on the page.")
             price = "nan"
@@ -56,9 +55,9 @@ def save_results(results, path):
     filename = now.strftime("%Y-%m-%d_%H.json")
 
     # Save the dictionary as a JSON file
-    with open(filename, "w") as file:
+    with open(path + filename, "w") as file:
         json.dump(results, file, indent=4)
-    print(f"Results saved to {filename}")
+    print(f"Results saved to {path + filename}")
 
 
 # Main script
@@ -77,5 +76,6 @@ if __name__ == "__main__":
         prices[hotel] = price
 
     # Save the results as a JSON file
-    path = "/media/data/pricedata_cesare"
+    path = "/media/data/pricedata_cesare/"
+    # path = ""
     save_results(prices, path)

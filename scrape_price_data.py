@@ -67,6 +67,12 @@ if __name__ == "__main__":
         "iroquois": "https://www.booking.com/hotel/us/the-iroquois-new-york.en-gb.html",
         "margaritaville": "https://www.booking.com/hotel/us/margaritaville-resort-times-square.en-gb.html",
         "knickerbocker": "https://www.booking.com/hotel/us/the-knickerbocker.en-gb.html",
+        "plaza": "https://www.booking.com/hotel/us/the-plaza.en-gb.html",
+        "ritz": "https://www.booking.com/hotel/us/the-ritz-carlton-new-york-central-park.en-gb.html",
+        "netherland": "https://www.booking.com/hotel/us/the-sherry-netherland.en-gb.html",
+        "panorama": "https://www.booking.com/hotel/us/panorama-vista-1-bedroom-2-bathroom-kitchen-suite.en-gb.html",
+        "jetluxury": "https://www.booking.com/hotel/us/jet-luxury-the-signature-condo.en-gb.html",
+        "marriott": "https://www.booking.com/hotel/us/marriott-s-grand-chateau-1-las-vegas.en-gb.html",
     }
 
     # Scrape prices for all hotels

@@ -28,24 +28,37 @@ def get_hotel_nextday_price_booking(hotel_url):
     # Send a GET request to the hotel page
     response = requests.get(hotel_url, headers=headers, params=params)
 
+    elements = {
+        "room_type": "hprt-roomtype-icon-link",
+        "guest_number": "bui-u-sr-only",
+        "price": "prco-valign-middle-helper"
+    }
+
     # Check if the request was successful
     if response.status_code == 200:
+        print(f"At this {hotel_url}")
+
         soup = BeautifulSoup(response.content, "html.parser")
 
-        # Find the price element (you may need to inspect the page to find the correct class or id)
-        price_element = soup.find("span", {"class": "prco-valign-middle-helper"})
+        values = dict()
 
-        if price_element:
-            price = price_element.text.strip()
-            print(f"At this {hotel_url}, \n The price for tomorrow night is: {price}")
-        else:
-            print("Price element not found on the page.")
-            price = "nan"
+        for key, tag in elements.items():
+            element = soup.find("span", {"class": tag})
+
+            if element:
+                value = element.text.strip()
+                print(f"\n The {key} for tomorrow night is: {value}")
+            else:
+                print(f"{key} element not found on the page.")
+                value = "nan"
+
+            values[key] = value
+
     else:
         print(f"Failed to retrieve the page. Status code: {response.status_code}")
-        price = "nan"
+        values = {key: "nan" for key in elements.keys()}
 
-    return price
+    return values
 
 
 # Function to save the results as a JSON file
@@ -83,12 +96,12 @@ if __name__ == "__main__":
     }
 
     # Scrape prices for all hotels
-    prices = {}
+    all_tickers = {}
     for hotel, url in hotels.items():
-        price = get_hotel_nextday_price_booking(url)
-        prices[hotel] = price
+        hotel_ticker = get_hotel_nextday_price_booking(url)
+        all_tickers[hotel] = hotel_ticker
 
     # Save the results as a JSON file
     path = "/media/data/pricedata_cesare/data/"
     # path = ""
-    save_results(prices, path)
+    save_results(all_tickers, path)

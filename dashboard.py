@@ -27,7 +27,7 @@ def load_data(data_path="/media/data/pricedata_cesare/data/"):
     # Load all data files
     all_data = []
     for file in json_files:
-        try:
+        # try:
             with open(file, 'r') as f:
                 data = json.load(f)
                 # Extract date from filename
@@ -36,8 +36,13 @@ def load_data(data_path="/media/data/pricedata_cesare/data/"):
                 date = datetime.strptime(date_str, "%Y-%m-%d_%H")
 
                 # Process the data
-                for hotel, price in data.items():
+                for hotel, value in data.items():
                     # Clean price data
+                    if type(value) is dict:
+                        price = value["price"]
+                    else:
+                        price = value
+
                     if price != "nan":
                         # Extract numeric value from price string (e.g., "$150" -> 150)
                         numeric_price = ''.join(filter(lambda x: x.isdigit() or x == '.', price))
@@ -54,8 +59,8 @@ def load_data(data_path="/media/data/pricedata_cesare/data/"):
                         "date": date,
                         "raw_price": price
                     })
-        except Exception as e:
-            st.warning(f"Error loading file {file}: {e}")
+        # except Exception as e:
+        #     st.warning(f"Error loading file {file}: {e}")
 
     # Convert to DataFrame
     df = pd.DataFrame(all_data)
@@ -90,7 +95,7 @@ if df is not None and not df.empty:
     selected_hotels = st.sidebar.multiselect(
         "Select Hotels",
         options=hotels,
-        default=hotels[:5]  # Default to showing first 5 hotels
+        default= ["iroquois", "margaritaville"] #hotels[:5]  # Default to showing first 5 hotels
     )
 
     if selected_hotels:
@@ -98,7 +103,7 @@ if df is not None and not df.empty:
 
     # Create visualizations
     with st.container():
-        st.subheader("Price Trends Over Time")
+        # st.subheader("Price Trends Over Time")
 
         # Check if there's valid data to plot
         if not df_filtered.empty and df_filtered['price'].notna().any():
@@ -107,34 +112,38 @@ if df is not None and not df.empty:
                 x="date",
                 y="price",
                 color="hotel",
-                title="Hotel Price Trends",
+                # title="Hotel Price Trends",
                 labels={"date": "Date", "price": "Price (USD)", "hotel": "Hotel"},
                 hover_data=["raw_price"]
             )
+
+            # Adjust the height of the plot (e.g., 700 pixels)
+            fig.update_layout(height=900, autosize=True)
+
             st.plotly_chart(fig, use_container_width=True)
         else:
             st.info("No valid price data available for the selected filters")
 
-        st.subheader("Current Price Comparison")
+        # st.subheader("Current Price Comparison")
 
         # Get the latest date data
-        latest_date = df_filtered['date'].max()
-        latest_data = df_filtered[df_filtered['date'] == latest_date]
-
-        if not latest_data.empty and latest_data['price'].notna().any():
-            fig = px.bar(
-                latest_data.sort_values('price', ascending=False),
-                x="hotel",
-                y="price",
-                title=f"Latest Prices ({latest_date.strftime('%Y-%m-%d %H:%M')})",
-                labels={"hotel": "Hotel", "price": "Price (USD)"},
-                color="hotel",
-                text_auto=True
-            )
-            fig.update_layout(showlegend=False)
-            st.plotly_chart(fig, use_container_width=True)
-        else:
-            st.info("No valid price data available for the latest date")
+        # latest_date = df_filtered['date'].max()
+        # latest_data = df_filtered[df_filtered['date'] == latest_date]
+        #
+        # if not latest_data.empty and latest_data['price'].notna().any():
+        #     fig = px.bar(
+        #         latest_data.sort_values('price', ascending=False),
+        #         x="hotel",
+        #         y="price",
+        #         title=f"Latest Prices ({latest_date.strftime('%Y-%m-%d %H:%M')})",
+        #         labels={"hotel": "Hotel", "price": "Price (USD)"},
+        #         color="hotel",
+        #         text_auto=True
+        #     )
+        #     fig.update_layout(showlegend=False)
+        #     st.plotly_chart(fig, use_container_width=True)
+        # else:
+        #     st.info("No valid price data available for the latest date")
 
     # Show raw data if requested
     if st.sidebar.checkbox("Show Raw Data"):

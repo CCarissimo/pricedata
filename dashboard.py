@@ -122,7 +122,7 @@ if df is not None and not df.empty:
             )
 
             # Adjust the height of the plot (e.g., 700 pixels)
-            fig.update_layout(height=900, autosize=True)
+            fig.update_layout(height=600, autosize=True)
 
             st.plotly_chart(fig, use_container_width=True)
         else:
@@ -157,11 +157,11 @@ else:
     st.error("No data available to display")
 
 # Add refresh button
-if st.sidebar.button("Refresh Data"):
-    st.experimental_rerun()
+# if st.sidebar.button("Refresh Data"):
+#     st.experimental_rerun()
 
 # Add information about the data
 st.sidebar.info("""
     This dashboard displays hotel price data scraped from Booking.com.
-    The data is updated daily and shows next-day prices for selected hotels.
+    The data is updated hourly and shows next-day prices for selected hotels.
 """)

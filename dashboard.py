@@ -64,6 +64,10 @@ def load_data(data_path="/media/data/pricedata_cesare/data/"):
 
     # Convert to DataFrame
     df = pd.DataFrame(all_data)
+
+    # Sort the dataframe by 'date'
+    df = df.sort_values(by="date", ascending=True)
+
     return df
 
 

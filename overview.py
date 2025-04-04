@@ -30,7 +30,7 @@ No. Companies can establish price collusion, but we do not ban companies. Becaus
 
 We must allow for algorithms that are *designed competitively*, and lead to competitive pricing. On the other hand, we must identify algorithms that are **orchestrated**, and lead to collusive pricing. 
 
-### What do we propose?
+### Our proposal
 
 We distinguish competitively designed algorithms from orchestrated algorithms by treating the algorithms as strategies, and determining whether or not the picked algorithm is a selfish profit maximising best response to the market.
 """

@@ -74,6 +74,24 @@ def load_data(data_path="/media/data/pricedata_cesare/data/"):
 # Load data
 df = load_data("./data/")
 
+first_text = """
+The pricing algorithms that individual hotels use on Booking.com illustrate the case of algorithm orchestration:
+"""
+
+text = """
+Let’s go back to 1960. Imagine the competition between hotels prior to any such centralized platform like Booking.com. Involving substantial search costs and with a lot of informational frictions, individual guests would check availabilities and compare prices across hotels, probably by telephone, and decide to book the one that faired best after cost-benefit analysis. Between two equally attractive hotels, the customer would reserve a room at the cheaper one.
+
+In the mid 1990s, all major hotels and hotel chains begin to offer online booking tools. Immediately afterwards, the first booking platforms emerge (e.g. Expedia). Now a lot of the informational frictions and search costs disappear. Frictionless competition finally has arrived. Guests check and compare prices easily, and decide to book the best deals. While matching clients and hotels quite efficiently, hotels probably actually dislike the platforms somehow for the high fees they charge and the price fight they accelerate.
+
+Now, in 2025, these platforms have become even more central in the game, and hotels seems to have made peace with them. So what changed in between? The main innovation are the platforms own “pricing algorithms.” These are tools that hotels plug in with their booking engines to automatically update prices as per algorithm suggestion. The platforms discourage the hotels to offer better rates off-platform. If one imagined an algorithm built for one hotel, to maximize that hotels gains individually, then one would get something like an optimal undercutter that, given the prices charged by all competitors, at any time undercuts optimally to attract the maximal demand. If all hotels were to use such tools, then there would be a tremendous price competition, and the result would probably be very low prices and great deals for guests.
+
+However, when all prices are orchestrated by algorithms issued by the same platform, as is the case, or worse still when all prices are orchestrated by the same central algorithm, one clearly would not expect such price fight. Taking the case of two hotels in such a situation one would instead imagine a profit-maximizing monopoly price being charged on average with some fluctuations between the two, so that half of the time one is cheaper, and the other half the other. Each party could individually improve by undercutting the other hotel at any moment, but both would be much worse off if they both started doing so. Sticking with the recommended prices instead guarantees prices on the Pareto frontier, that is, as profitable as it gets.
+
+Check out some of the prices we have been finding on Booking.com?
+
+What does it look like to you? Competition or Orchestration?
+"""
+
 if df is not None and not df.empty:
     # Add sidebar filters
     st.sidebar.header("Filters")
@@ -108,6 +126,7 @@ if df is not None and not df.empty:
     # Create visualizations
     with st.container():
         # st.subheader("Price Trends Over Time")
+        st.markdown(first_text)
 
         # Check if there's valid data to plot
         if not df_filtered.empty and df_filtered['price'].notna().any():
@@ -127,6 +146,8 @@ if df is not None and not df.empty:
             st.plotly_chart(fig, use_container_width=True)
         else:
             st.info("No valid price data available for the selected filters")
+
+        st.markdown(text)
 
         # st.subheader("Current Price Comparison")
 

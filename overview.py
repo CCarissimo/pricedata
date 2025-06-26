@@ -14,6 +14,10 @@ The rise of AI is linked to the phenomenon of algorithmic collusion. We may wond
 
 Short answers: yes, yes, a lot.
 
+"""
+
+article_content_2 = """
+
 Now with a bit more detail:
 
 ### Do algorithms make collusion easier? 
@@ -35,8 +39,10 @@ We must allow for algorithms that are *designed competitively*, and lead to comp
 We distinguish competitively designed algorithms from orchestrated algorithms by treating the algorithms as strategies, and determining whether or not the picked algorithm is a selfish profit maximising best response to the market.
 """
 
+st.markdown(article_content)
+
 # Display image
-st.image("images/age_of_ai.png", caption="Algorithms change competition and collusion.")
+st.image("./images/age_of_ai_3.png", caption="Algorithms change competition and collusion.")
 
 # Display Markdown content
-st.markdown(article_content)
+st.markdown(article_content_2)
